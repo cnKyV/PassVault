@@ -10,6 +10,15 @@ namespace PassVault
     {
 
         public static string DocumentsRelative = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        public static string DocumentsFullPath(string name) =>  string.Join(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),name);
+        public static string DocumentsFullPath(string name) =>  Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\"+name+"_vault.json";
+        public static string DemoValues
+        {
+            get
+            {
+                var relativePath = Environment.CurrentDirectory.ToString();
+                var fullPath = relativePath+"\\valueLoader.json";
+                return fullPath;
+            }
+        }
     }
 }

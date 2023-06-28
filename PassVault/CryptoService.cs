@@ -199,7 +199,7 @@ namespace PassVault
 
             var payload = new byte[((SaltBitSize / 8) * 2) + nonSecretPayload.Length];
 
-            Array.Copy(nonSecretPayload,payload,payload.Length);
+            Array.Copy(nonSecretPayload,payload,nonSecretPayload.Length);
             int payloadIndex = nonSecretPayload.Length;
 
             byte[] cryptKey;

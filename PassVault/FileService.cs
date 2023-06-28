@@ -9,20 +9,46 @@ namespace PassVault
 {
     internal static class FileService
     {
-        public static void CreateJson(string path, string masterName, string masterPassword)
+        public static void CreateJson(string masterName, string masterPassword)
         {
             var jsonName = Path.DocumentsFullPath(masterName);
+            var secretMessage = string.Empty;
+            var nonSecretPayload = string.Empty;
+             
 
             if (File.Exists(jsonName))
                 File.Delete(jsonName);
 
-            var creds = new Creds();
+                var creds = new Creds();
 
             creds.MasterUname = masterName;
             creds.MasterPass = masterPassword;
             creds.Accounts = new List<Account>();
 
-            CryptoService.Encrypt(creds);
+#if DEBUG
+            var preloadValues = Path.DemoValues;
+            if (File.Exists(preloadValues))
+            {
+                var values = File.ReadAllText(preloadValues);
+                var convertedValues = JsonSerializer.Deserialize<PreloadValue>(values);
+
+                secretMessage = convertedValues.CryptoConfig.SECRET_MESSAGE;
+                nonSecretPayload = convertedValues.CryptoConfig.NON_SECRET_PAYLOAD; 
+            }
+
+
+
+#endif
+            
+            if (!string.IsNullOrEmpty(secretMessage) && !string.IsNullOrEmpty(nonSecretPayload))
+            {
+                var payloadInBytes = Encoding.UTF8.GetBytes(secretMessage);
+                var cryptoService = CryptoService.SimpleEncryptWithPassword(secretMessage, masterPassword);
+
+
+            }
+
+
 
             var initialJson = JsonSerializer.Serialize(creds);
 

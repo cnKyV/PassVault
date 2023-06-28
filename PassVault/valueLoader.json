@@ -1,9 +1,9 @@
 {
-  "CryptoService": {
-    "ENCRYPTION_KEY": "",
-    "SECRET_MESSAGE": ""
+  "CryptoConfig": {
+    "NON_SECRET_PAYLOAD": "TESTDUMMY",
+    "SECRET_MESSAGE": "TESTDUMMTESTDUMMTESTDUMMTESTDUMM"
   },
-  "FileService": {
+  "FileConfig": {
 
   }
 }
