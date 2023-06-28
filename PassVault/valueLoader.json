@@ -1,0 +1,9 @@
+{
+  "CryptoService": {
+    "ENCRYPTION_KEY": "",
+    "SECRET_MESSAGE": ""
+  },
+  "FileService": {
+
+  }
+}
