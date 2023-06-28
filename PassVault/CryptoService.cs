@@ -28,7 +28,47 @@ namespace PassVault
             Random.GetBytes(key); 
             return key;
         }
-        
+      
+        public static string SimpleEncrypt(string secretMessage, byte[] cryptKey, byte[] authKey, byte[] nonSecretPayload = null)
+        {
+            if (string.IsNullOrEmpty(secretMessage))
+                throw new ArgumentException("Secret Message Required!", "secretMessage");
+
+            var plainText = Encoding.UTF8.GetBytes(secretMessage);
+            var cipherText = SimpleEncrypt(plainText,cryptKey, authKey, nonSecretPayload);
+            return Convert.ToBase64String(cipherText);
+        }   
+
+        public static string SimpleDecrypt(string encryptedMessage, byte[] cryptKey, byte[] authKey, int nonSecretPayloadLength = 0)
+        {
+            if (string.IsNullOrWhiteSpace(encryptedMessage))
+                throw new ArgumentException("Encrypted Message Required!", "encryptedMessage");
+
+            var cipherText = Convert.FromBase64String(encryptedMessage);
+            var plainText = SimpleDecrypt(cipherText,cryptKey,authKey, nonSecretPayloadLength);
+            return plainText == null ? "" : Encoding.UTF8.GetString(plainText);
+        }
+
+        public static string SimpleEncryptWithPassword(string secretMessage, string password, byte[] nonSecretPayload = null)
+        {
+            if (string.IsNullOrEmpty(secretMessage))
+                throw new ArgumentException("Secret Message Required!", "secretMessage");
+
+            var plainText = Encoding.UTF8.GetBytes(secretMessage);
+            var cipherText = SimpleEncryptWithPassword(plainText, password, nonSecretPayload);
+            return Convert.ToBase64String(cipherText);
+        }
+
+        public static string SimpleDecryptWithPassword(string encryptedMessage, string password, int nonSecretPayloadLength = 0)
+        {
+            if (string.IsNullOrWhiteSpace(encryptedMessage))
+                throw new ArgumentException("Encrypted Message Required!", "encryptedMessage");
+
+            var cipherText = Convert.FromBase64String(encryptedMessage);
+            var plainText = SimpleDecryptWithPassword(cipherText, password, nonSecretPayloadLength);
+            return plainText == null ? null : Encoding.UTF8.GetString(plainText);
+        }
+
         public static byte[] SimpleEncrypt(byte[] secretMessage, byte[] cryptKey, byte[] authKey, byte[] nonSecretPayload = null)
         {
             if (cryptKey == null || cryptKey.Length != KeyBitSize / 8)
@@ -214,28 +254,6 @@ namespace PassVault
 
 
             return new byte[] { };
-        }
-
-        internal static void Encrypt(Creds creds)
-        {
-            
-        }
-        internal static void Decrypt(string path) 
-        {
-
-        }
-        private static string Encrypt(string plainText, string password) 
-        { 
-            if (plainText == null)
-            {
-                throw new ArgumentNullException(nameof(plainText));
-            }
-            if (password == null)
-            {
-                throw new ArgumentException(nameof(password));
-            }
-            
-            return "";
         }
     }
 }
