@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using PassVault.Models;
 
-namespace PassVault
+namespace PassVault.Services
 {
     internal static class FileService
     {
@@ -14,12 +15,12 @@ namespace PassVault
             var jsonName = Path.DocumentsFullPath(masterName);
             var secretMessage = string.Empty;
             var nonSecretPayload = string.Empty;
-             
+
 
             if (File.Exists(jsonName))
                 File.Delete(jsonName);
 
-                var creds = new Creds();
+            var creds = new Creds();
 
             creds.MasterUname = masterName;
             creds.MasterPass = masterPassword;
@@ -33,17 +34,17 @@ namespace PassVault
                 var convertedValues = JsonSerializer.Deserialize<PreloadValue>(values);
 
                 secretMessage = convertedValues.CryptoConfig.SECRET_MESSAGE;
-                nonSecretPayload = convertedValues.CryptoConfig.NON_SECRET_PAYLOAD; 
+                nonSecretPayload = convertedValues.CryptoConfig.NON_SECRET_PAYLOAD;
             }
 
 
 
 #endif
-            
+
             if (!string.IsNullOrEmpty(secretMessage) && !string.IsNullOrEmpty(nonSecretPayload))
             {
                 var payloadInBytes = Encoding.UTF8.GetBytes(secretMessage);
-                var cryptoService = CryptoService.SimpleEncryptWithPassword(secretMessage, masterPassword);
+                var cryptoService = EncryptionService.SimpleEncryptWithPassword(secretMessage, masterPassword);
 
 
             }
@@ -62,9 +63,9 @@ namespace PassVault
         {
 
         }
-        public static void GetJson(string path) 
-        { 
-        
+        public static void GetJson(string path)
+        {
+
         }
     }
 

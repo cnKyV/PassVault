@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassVault", "PassVault\PassVault.csproj", "{BD6C3605-00FC-4DAA-9912-880DC79B38AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PassVault", "PassVault\PassVault.csproj", "{BD6C3605-00FC-4DAA-9912-880DC79B38AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassVault.UnitTests", "PassVault.UnitTests\PassVault.UnitTests.csproj", "{176439A0-DF84-4A01-95A6-D32F721167E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BD6C3605-00FC-4DAA-9912-880DC79B38AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD6C3605-00FC-4DAA-9912-880DC79B38AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD6C3605-00FC-4DAA-9912-880DC79B38AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{176439A0-DF84-4A01-95A6-D32F721167E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{176439A0-DF84-4A01-95A6-D32F721167E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{176439A0-DF84-4A01-95A6-D32F721167E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{176439A0-DF84-4A01-95A6-D32F721167E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

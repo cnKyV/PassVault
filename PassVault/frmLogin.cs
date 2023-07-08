@@ -1,3 +1,5 @@
+using PassVault.Services;
+
 namespace PassVault
 {
     public partial class frmLogin : Form
