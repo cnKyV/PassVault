@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PassVault.Models
 {
-    internal class HashResponse
+    public class HashResponse
     {
-        public string HashedPassword { get; set; }
+        public string HashedString { get; set; }
         public string Salt { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace PassVault
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            FileService.CreateJson("cenkay", "cenkaycenkaycenkay");
+            FileService.CreateFile("cenkay", "cenkaycenkaycenkay");
         }
     }
 }

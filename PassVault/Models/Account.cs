@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PassVault
+namespace PassVault.Models
 {
     internal class Account
     {
-        
+
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public Uri Link { get; set; }
+        public HashResponse Username { get; set; }
+        public HashResponse Password { get; set; }
+        public HashResponse Email { get; set; }
+        public HashResponse Link { get; set; }
     }
 }

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PassVault.Models;
 
-namespace PassVault
+namespace PassVault.Models
 {
-    internal class Creds
+    internal class Credentials
     {
-        public string MasterUname { get; set; }
-        public string MasterPass { get; set; }
+        public HashResponse MasterUsername { get; set; }
+        public HashResponse MasterPassword { get; set; }
         public ICollection<Account> Accounts { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PassVault.Services
 {
-    internal static class EncryptionService
+    public static class EncryptionService
     {
         //AES then HMAC
 
