@@ -13,54 +13,31 @@ namespace PassVault.Services
 
     internal static class FileService
     {
-        private static bool _hasLoggedin = false;
-        private static char[] _userName = new char[char.MinValue];
-        private static char[] _password = new char[char.MinValue];
 
-        public static void CreateFile(string masterName, string masterPassword)
+        public static void UpsertFile(string masterUsername, string masterPassword, Credentials? credentials = null)
         {
-            _userName = masterName.ToCharArray();
-            _password = masterPassword.ToCharArray();
+            var filePath = Configs.Path.DocumentsFullPath(masterUsername);
 
-            var jsonName = Configs.Path.DocumentsFullPath(masterName);
-            var secretMessage = string.Empty;
-            var nonSecretPayload = string.Empty;
-
-
-
-#if DEBUG
-            var preloadValues = Configs.Path.DemoValues;
-            if (File.Exists(preloadValues))
+            if (CredentialService.ValidateLogin(masterUsername, masterPassword))
             {
-                var values = File.ReadAllText(preloadValues);
-                var convertedValues = JsonSerializer.Deserialize<PreloadValue>(values);
+                if (credentials is null && !File.Exists(filePath))
+                {
+                    credentials = new Credentials();
 
-                secretMessage = convertedValues.CryptoConfig.SECRET_MESSAGE;
-                nonSecretPayload = convertedValues.CryptoConfig.NON_SECRET_PAYLOAD;
-            }
-#endif
+                    credentials.MasterUsername = HashingService.HashString(masterUsername);
+                    credentials.MasterPassword = HashingService.HashString(masterPassword);
+                    credentials.Accounts = new List<Account>();
+                }
 
-            if (!string.IsNullOrEmpty(secretMessage) && !string.IsNullOrEmpty(nonSecretPayload))
-            {
-                var payloadInBytes = Encoding.UTF8.GetBytes(secretMessage);
-                var encryptedPass = EncryptionService.SimpleEncryptWithPassword(secretMessage, masterPassword);
-                var creds = new Credentials();
+                var initialJson = JsonSerializer.Serialize(credentials);
 
-                creds.MasterUsername = HashingService.HashString(masterName);
-                creds.MasterPassword = HashingService.HashString(masterPassword);
-
-                var initialJson = JsonSerializer.Serialize(creds);
-
-               File.WriteAllText(jsonName, initialJson);
+               File.WriteAllText(filePath, initialJson);
             }
 
-            if (!File.Exists(jsonName))
+            if (!File.Exists(filePath))
                 throw new FileNotFoundException("Couldn't create the file.");
         }
-        public static void UpdateFile(string path, Credentials creds)
-        {
 
-        }
         public static Credentials GetFile(string path)
         {
             if (File.Exists(path))

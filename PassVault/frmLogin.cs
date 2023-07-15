@@ -24,7 +24,25 @@ namespace PassVault
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            FileService.CreateFile("cenkay", "cenkaycenkaycenkay");
+            if(txtUser.Text is null || txtMaster.Text is null)
+            {
+                MessageBox.Show("Username or Password is empty");
+                return;
+            }
+
+            var isLoginSuccesful = CredentialService.Login(txtUser.Text, txtMaster.Text);
+           
+            if (!isLoginSuccesful)
+            {
+                MessageBox.Show("Incorrect Credentials");
+                return;
+            }
+               
+            var frm = new frmMain();
+            this.Visible = false;
+            frm.ShowDialog(this);
+            this.Visible = true;
+
         }
     }
 }
