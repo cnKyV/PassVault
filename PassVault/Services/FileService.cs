@@ -18,8 +18,7 @@ namespace PassVault.Services
         {
             var filePath = Configs.Path.DocumentsFullPath(masterUsername);
 
-            if (CredentialService.ValidateLogin(masterUsername, masterPassword))
-            {
+
                 if (credentials is null && !File.Exists(filePath))
                 {
                     credentials = new Credentials();
@@ -31,8 +30,8 @@ namespace PassVault.Services
 
                 var initialJson = JsonSerializer.Serialize(credentials);
 
-               File.WriteAllText(filePath, initialJson);
-            }
+               File.WriteAllText(filePath, initialJson, Encoding.UTF8);
+            
 
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("Couldn't create the file.");

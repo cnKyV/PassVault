@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PassVault.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,14 @@ namespace PassVault
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
+            if (txtUsername.Text is null || txtPassword.Text is null)
+            {
+                MessageBox.Show("Username or Password is null");
+                return;
+            }
 
+            FileService.UpsertFile(txtUsername.Text, txtPassword.Text);
+            this.OpenNewForm(Enums.FormType.LoginForm);
         }
     }
 }

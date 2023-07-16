@@ -11,10 +11,7 @@ namespace PassVault
 
         private void btnNewMaster_Click(object sender, EventArgs e)
         {
-            var frm = new frmNew();
-            this.Visible = false;
-            frm.ShowDialog(this);
-            this.Visible = true;
+            this.OpenNewForm(Enums.FormType.CreateForm);
         }
 
         private void frmLogin_Load(object sender, EventArgs e)
@@ -35,14 +32,11 @@ namespace PassVault
             if (!isLoginSuccesful)
             {
                 MessageBox.Show("Incorrect Credentials");
+                CredentialService.Logoff();
                 return;
             }
-               
-            var frm = new frmMain();
-            this.Visible = false;
-            frm.ShowDialog(this);
-            this.Visible = true;
 
+            this.OpenNewForm(Enums.FormType.MainForm);
         }
     }
 }

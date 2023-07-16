@@ -32,7 +32,7 @@ namespace PassVault.Services
 
             var hashResponse = new HashResponse();
 
-            hashResponse.Salt = Encoding.UTF8.GetString(salt);
+            hashResponse.Salt = Convert.ToHexString(salt);
             hashResponse.HashedString = Convert.ToHexString(hash);
 
             return hashResponse;
@@ -40,7 +40,7 @@ namespace PassVault.Services
 
         public static bool VerifyString(string password, HashResponse hashedPassword)
         {
-            var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, Encoding.UTF8.GetBytes(hashedPassword.Salt), Iteration, HashAlgorithmType,KeyBitSize/8);
+            var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, Convert.FromHexString(hashedPassword.Salt), Iteration, HashAlgorithmType,KeyBitSize/8);
             return CryptographicOperations.FixedTimeEquals(hashToCompare, Convert.FromHexString(hashedPassword.HashedString));
         }
     }
