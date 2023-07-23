@@ -10,15 +10,15 @@ namespace PassVault.Services
 {
     internal static class CredentialService
     {
-        private static bool _hasLoggedin = false;
-        private static string? _userName = null;
-        private static string? _password = null;
+        public static bool HasLoggedIn = false;
+        public static string? Username = null;
+        public static string? Password = null;
 
         public static bool Login(string username, string password)
         {
-            _hasLoggedin = true;
-            _userName = username;
-            _password = password;
+            HasLoggedIn = true;
+            Username = username;
+            Password = password;
 
             var path = Configs.Path.DocumentsFullPath(username);
 
@@ -45,7 +45,7 @@ namespace PassVault.Services
 
         public static bool ValidateLogin(string username, string password)
         {
-            if (_hasLoggedin && _userName == username && _password == password)
+            if (HasLoggedIn && Username == username && Password == password)
                 return true;
 
             return false;
@@ -58,14 +58,14 @@ namespace PassVault.Services
 
             if(oldPassword == newPassword) return;
 
-            _password = newPassword;
+            Password = newPassword;
         }
 
         public static void Logoff()
         {
-            _hasLoggedin = false;
-            _userName = null;
-            _password = null;
+            HasLoggedIn = false;
+            Username = null;
+            Password = null;
         }
     }
     }

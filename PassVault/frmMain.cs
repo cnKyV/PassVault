@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PassVault.Models;
+using PassVault.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +21,7 @@ namespace PassVault
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (!validateInput())
+            if (!ValidateInput())
             {
                 MessageBox.Show("Empty field!");
                 return;
@@ -41,7 +43,7 @@ namespace PassVault
 
         }
 
-        private bool validateInput()
+        private bool ValidateInput()
         {
             if (string.IsNullOrEmpty(txtLink.Text) || string.IsNullOrEmpty(txtPassword.Text) || string.IsNullOrEmpty(txtUname.Text))
                 return false;
@@ -53,10 +55,11 @@ namespace PassVault
         {
             this.ActiveControl = txtUname;
 
-            lwMain.Columns.Add("Alias", lwMain.Width / 4);
-            lwMain.Columns.Add("Username", lwMain.Width / 4);
-            lwMain.Columns.Add("Password", lwMain.Width / 4);
-            lwMain.Columns.Add("Website", lwMain.Width / 4);
+            lwMain.Columns.Add("Alias", lwMain.Width / 5);
+            lwMain.Columns.Add("Username", lwMain.Width / 5);
+            lwMain.Columns.Add("Password", lwMain.Width / 5);
+            lwMain.Columns.Add("Email", lwMain.Width / 5);
+            lwMain.Columns.Add("Website", lwMain.Width / 5);
 
             lwMain.View = View.Details;
             lwMain.FullRowSelect = true;
@@ -118,7 +121,8 @@ namespace PassVault
                 txtAlias.Text = lwMain.SelectedItems[0].SubItems[0].Text;
                 txtUname.Text = lwMain.SelectedItems[0].SubItems[1].Text;
                 txtPassword.Text = lwMain.SelectedItems[0].SubItems[2].Text;
-                txtLink.Text = lwMain.SelectedItems[0].SubItems[3].Text;
+                txtEmail.Text = lwMain.SelectedItems[0].SubItems[3].Text;
+                txtLink.Text = lwMain.SelectedItems[0].SubItems[4].Text;
             }
         }
 
@@ -135,11 +139,33 @@ namespace PassVault
             lwMain.SelectedItems[0].SubItems[0].Text = txtAlias.Text;
             lwMain.SelectedItems[0].SubItems[1].Text = txtUname.Text;
             lwMain.SelectedItems[0].SubItems[2].Text = txtPassword.Text;
-            lwMain.SelectedItems[0].SubItems[3].Text = txtLink.Text;
+            lwMain.SelectedItems[0].SubItems[3].Text = txtEmail.Text;
+            lwMain.SelectedItems[0].SubItems[4].Text = txtLink.Text;
 
         }
 
         private void SaveChanges()
+        {
+            if (string.IsNullOrEmpty(CredentialService.Username) || string.IsNullOrEmpty(CredentialService.Username) && !CredentialService.HasLoggedIn)
+            {
+                MessageBox.Show("User not found!");
+                return;
+            }
+
+            var accounts = new List<Account>();
+
+            foreach (ListViewItem lwAccount in lwMain.Items)
+            {
+                var account = new Account(lwAccount.SubItems[1].Text, lwAccount.SubItems[2].Text, lwAccount.SubItems[3].Text, lwAccount.SubItems[4].Text, lwAccount.SubItems[0].Text);
+                accounts.Add(account);
+            }
+
+            var credentials = new Credentials(CredentialService.Username, CredentialService.Password, accounts);
+
+            FileService.UpsertFile(CredentialService.Username, CredentialService.Password,);
+        }
+
+        private void btnSaveChanges_Click(object sender, EventArgs e)
         {
 
         }

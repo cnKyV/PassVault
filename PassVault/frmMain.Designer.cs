@@ -43,6 +43,8 @@
             label1 = new Label();
             txtAlias = new TextBox();
             btnSaveChanges = new Button();
+            label2 = new Label();
+            txtEmail = new TextBox();
             SuspendLayout();
             // 
             // lwMain
@@ -81,13 +83,13 @@
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(94, 66);
             btnEdit.TabIndex = 6;
-            btnEdit.Text = "Edit";
+            btnEdit.Text = "Update";
             btnEdit.UseVisualStyleBackColor = true;
             btnEdit.Click += btnEdit_Click;
             // 
             // txtLink
             // 
-            txtLink.Location = new Point(758, 141);
+            txtLink.Location = new Point(758, 194);
             txtLink.Name = "txtLink";
             txtLink.Size = new Size(256, 27);
             txtLink.TabIndex = 3;
@@ -96,7 +98,7 @@
             // lblLink
             // 
             lblLink.AutoSize = true;
-            lblLink.Location = new Point(758, 118);
+            lblLink.Location = new Point(758, 171);
             lblLink.Name = "lblLink";
             lblLink.Size = new Size(35, 20);
             lblLink.TabIndex = 5;
@@ -157,7 +159,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(758, 171);
+            label1.Location = new Point(758, 224);
             label1.Name = "label1";
             label1.Size = new Size(41, 20);
             label1.TabIndex = 13;
@@ -165,7 +167,7 @@
             // 
             // txtAlias
             // 
-            txtAlias.Location = new Point(758, 194);
+            txtAlias.Location = new Point(758, 247);
             txtAlias.Name = "txtAlias";
             txtAlias.Size = new Size(256, 27);
             txtAlias.TabIndex = 4;
@@ -179,12 +181,31 @@
             btnSaveChanges.TabIndex = 14;
             btnSaveChanges.Text = "Save Changes";
             btnSaveChanges.UseVisualStyleBackColor = true;
+            btnSaveChanges.Click += btnSaveChanges_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(758, 118);
+            label2.Name = "label2";
+            label2.Size = new Size(46, 20);
+            label2.TabIndex = 16;
+            label2.Text = "Email";
+            // 
+            // txtEmail
+            // 
+            txtEmail.Location = new Point(758, 141);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(256, 27);
+            txtEmail.TabIndex = 15;
             // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1026, 450);
+            Controls.Add(label2);
+            Controls.Add(txtEmail);
             Controls.Add(btnSaveChanges);
             Controls.Add(label1);
             Controls.Add(txtAlias);
@@ -224,5 +245,7 @@
         private Label label1;
         private TextBox txtAlias;
         private Button btnSaveChanges;
+        private Label label2;
+        private TextBox txtEmail;
     }
 }
