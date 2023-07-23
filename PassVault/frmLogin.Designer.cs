@@ -51,6 +51,7 @@
             txtMaster.Name = "txtMaster";
             txtMaster.Size = new Size(197, 27);
             txtMaster.TabIndex = 1;
+            txtMaster.KeyDown += txtMaster_KeyDown;
             // 
             // btnLogin
             // 

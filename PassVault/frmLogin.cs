@@ -16,19 +16,19 @@ namespace PassVault
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-
+            this.ActiveControl = txtUser;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if(txtUser.Text is null || txtMaster.Text is null)
+            if (txtUser.Text is null || txtMaster.Text is null)
             {
                 MessageBox.Show("Username or Password is empty");
                 return;
             }
 
             var isLoginSuccesful = CredentialService.Login(txtUser.Text, txtMaster.Text);
-           
+
             if (!isLoginSuccesful)
             {
                 MessageBox.Show("Incorrect Credentials");
@@ -37,6 +37,13 @@ namespace PassVault
             }
 
             this.OpenNewForm(Enums.FormType.MainForm);
+        }
+
+        private void txtMaster_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btnLogin_Click(sender, e);
+            
         }
     }
 }

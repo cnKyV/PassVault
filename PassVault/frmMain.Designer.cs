@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listView1 = new ListView();
+            lwMain = new ListView();
             btnAdd = new Button();
             btnRemove = new Button();
             btnEdit = new Button();
@@ -36,53 +36,62 @@
             lblLink = new Label();
             txtPassword = new TextBox();
             lblPass = new Label();
-            textBox1 = new TextBox();
+            txtUname = new TextBox();
             lblUname = new Label();
             btnExit = new Button();
             btnLogout = new Button();
+            label1 = new Label();
+            txtAlias = new TextBox();
+            btnSaveChanges = new Button();
             SuspendLayout();
             // 
-            // listView1
+            // lwMain
             // 
-            listView1.Location = new Point(12, 12);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(640, 426);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
+            lwMain.Location = new Point(12, 12);
+            lwMain.Name = "lwMain";
+            lwMain.Size = new Size(640, 426);
+            lwMain.TabIndex = 10;
+            lwMain.UseCompatibleStateImageBehavior = false;
+            lwMain.View = View.List;
+            lwMain.ItemActivate += lwMain_ItemActivate;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(658, 261);
+            btnAdd.Location = new Point(658, 6);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(94, 177);
-            btnAdd.TabIndex = 1;
+            btnAdd.TabIndex = 5;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // btnRemove
             // 
-            btnRemove.Location = new Point(658, 12);
+            btnRemove.Location = new Point(658, 261);
             btnRemove.Name = "btnRemove";
             btnRemove.Size = new Size(94, 171);
-            btnRemove.TabIndex = 2;
+            btnRemove.TabIndex = 7;
             btnRemove.Text = "Remove";
             btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.Click += btnRemove_Click;
             // 
             // btnEdit
             // 
             btnEdit.Location = new Point(658, 189);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(94, 66);
-            btnEdit.TabIndex = 3;
+            btnEdit.TabIndex = 6;
             btnEdit.Text = "Edit";
             btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
             // txtLink
             // 
             txtLink.Location = new Point(758, 141);
             txtLink.Name = "txtLink";
             txtLink.Size = new Size(256, 27);
-            txtLink.TabIndex = 4;
+            txtLink.TabIndex = 3;
+            txtLink.KeyDown += txtLink_KeyDown;
             // 
             // lblLink
             // 
@@ -98,7 +107,8 @@
             txtPassword.Location = new Point(758, 88);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(256, 27);
-            txtPassword.TabIndex = 6;
+            txtPassword.TabIndex = 2;
+            txtPassword.KeyDown += txtPassword_KeyDown;
             // 
             // lblPass
             // 
@@ -109,12 +119,13 @@
             lblPass.TabIndex = 7;
             lblPass.Text = "Password";
             // 
-            // textBox1
+            // txtUname
             // 
-            textBox1.Location = new Point(758, 35);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(256, 27);
-            textBox1.TabIndex = 8;
+            txtUname.Location = new Point(758, 35);
+            txtUname.Name = "txtUname";
+            txtUname.Size = new Size(256, 27);
+            txtUname.TabIndex = 1;
+            txtUname.KeyDown += txtUname_KeyDown;
             // 
             // lblUname
             // 
@@ -130,7 +141,7 @@
             btnExit.Location = new Point(758, 409);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(256, 29);
-            btnExit.TabIndex = 10;
+            btnExit.TabIndex = 9;
             btnExit.Text = "Exit";
             btnExit.UseVisualStyleBackColor = true;
             // 
@@ -139,19 +150,48 @@
             btnLogout.Location = new Point(758, 374);
             btnLogout.Name = "btnLogout";
             btnLogout.Size = new Size(256, 29);
-            btnLogout.TabIndex = 11;
+            btnLogout.TabIndex = 8;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(758, 171);
+            label1.Name = "label1";
+            label1.Size = new Size(41, 20);
+            label1.TabIndex = 13;
+            label1.Text = "Alias";
+            // 
+            // txtAlias
+            // 
+            txtAlias.Location = new Point(758, 194);
+            txtAlias.Name = "txtAlias";
+            txtAlias.Size = new Size(256, 27);
+            txtAlias.TabIndex = 4;
+            txtAlias.KeyDown += txtAlias_KeyDown;
+            // 
+            // btnSaveChanges
+            // 
+            btnSaveChanges.Location = new Point(758, 325);
+            btnSaveChanges.Name = "btnSaveChanges";
+            btnSaveChanges.Size = new Size(256, 43);
+            btnSaveChanges.TabIndex = 14;
+            btnSaveChanges.Text = "Save Changes";
+            btnSaveChanges.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1026, 450);
+            Controls.Add(btnSaveChanges);
+            Controls.Add(label1);
+            Controls.Add(txtAlias);
             Controls.Add(btnLogout);
             Controls.Add(btnExit);
             Controls.Add(lblUname);
-            Controls.Add(textBox1);
+            Controls.Add(txtUname);
             Controls.Add(lblPass);
             Controls.Add(txtPassword);
             Controls.Add(lblLink);
@@ -159,16 +199,17 @@
             Controls.Add(btnEdit);
             Controls.Add(btnRemove);
             Controls.Add(btnAdd);
-            Controls.Add(listView1);
+            Controls.Add(lwMain);
             Name = "frmMain";
             Text = "frmMain";
+            Load += frmMain_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private ListView listView1;
+        private ListView lwMain;
         private Button btnAdd;
         private Button btnRemove;
         private Button btnEdit;
@@ -176,9 +217,12 @@
         private Label lblLink;
         private TextBox txtPassword;
         private Label lblPass;
-        private TextBox textBox1;
+        private TextBox txtUname;
         private Label lblUname;
         private Button btnExit;
         private Button btnLogout;
+        private Label label1;
+        private TextBox txtAlias;
+        private Button btnSaveChanges;
     }
 }
