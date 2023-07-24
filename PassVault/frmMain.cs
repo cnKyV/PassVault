@@ -156,7 +156,15 @@ namespace PassVault
 
             foreach (ListViewItem lwAccount in lwMain.Items)
             {
-                var account = new Account(lwAccount.SubItems[1].Text, lwAccount.SubItems[2].Text, lwAccount.SubItems[3].Text, lwAccount.SubItems[4].Text, lwAccount.SubItems[0].Text);
+                //var account = new Account(lwAccount.SubItems[1].Text, lwAccount.SubItems[2].Text, lwAccount.SubItems[3].Text, lwAccount.SubItems[4].Text, lwAccount.SubItems[0].Text);
+                var account = new Account();
+
+                account.Username = lwAccount.SubItems[1].Text;
+                account.Password = lwAccount.SubItems[2].Text;
+                account.Email = lwAccount.SubItems[3].Text;
+                account.Link = lwAccount.SubItems[4].Text;
+                account.Alias = lwAccount.SubItems[0].Text;
+
                 accounts.Add(account);
             }
 
