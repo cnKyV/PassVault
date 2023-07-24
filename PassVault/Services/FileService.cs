@@ -14,7 +14,7 @@ namespace PassVault.Services
     internal static class FileService
     {
 
-        public static void UpsertFile(string masterUsername, string masterPassword, Credentials? credentials = null)
+        public async static Task UpsertFile(string masterUsername, string masterPassword, Credentials? credentials = null)
         {
             var filePath = Configs.Path.DocumentsFullPath(masterUsername);
 
@@ -28,10 +28,15 @@ namespace PassVault.Services
                     credentials.Accounts = new List<Account>();
                 }
 
-                var initialJson = JsonSerializer.Serialize(credentials);
+            await using (var ms = new MemoryStream())
+            {
+                await JsonSerializer.SerializeAsync(ms,credentials);
 
-               File.WriteAllText(filePath, initialJson, Encoding.UTF8);
-            
+                ms.Position = 0;
+               var json = Encoding.ASCII.GetString(ms.ToArray()); 
+
+                await File.WriteAllTextAsync(filePath, json, Encoding.UTF8);
+            }
 
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("Couldn't create the file.");

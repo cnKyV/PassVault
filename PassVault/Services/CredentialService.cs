@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PassVault.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,13 +14,11 @@ namespace PassVault.Services
         public static bool HasLoggedIn = false;
         public static string? Username = null;
         public static string? Password = null;
+        public static HashResponse? UsernameHashed = null;
+        public static HashResponse? PasswordHashed = null;
 
         public static bool Login(string username, string password)
         {
-            HasLoggedIn = true;
-            Username = username;
-            Password = password;
-
             var path = Configs.Path.DocumentsFullPath(username);
 
             if (!File.Exists(path))
@@ -39,6 +38,14 @@ namespace PassVault.Services
 
             if (!checkPassword)
                 return false;
+
+            HasLoggedIn = true;
+            
+            Username = username;
+            Password = password;
+
+            UsernameHashed = credentials.MasterUsername;
+            PasswordHashed = credentials.MasterPassword;
 
             return true;
         }

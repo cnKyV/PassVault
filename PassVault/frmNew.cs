@@ -18,7 +18,7 @@ namespace PassVault
             InitializeComponent();
         }
 
-        private void btnRegister_Click(object sender, EventArgs e)
+        private async void btnRegister_Click(object sender, EventArgs e)
         {
             if (txtUsername.Text is null || txtPassword.Text is null)
             {
@@ -26,7 +26,7 @@ namespace PassVault
                 return;
             }
 
-            FileService.UpsertFile(txtUsername.Text, txtPassword.Text);
+            await FileService.UpsertFile(txtUsername.Text, txtPassword.Text);
             this.OpenNewForm(Enums.FormType.LoginForm);
         }
     }

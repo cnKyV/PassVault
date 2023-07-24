@@ -36,7 +36,7 @@ namespace PassVault
                 txtAlias.Text = txtLinkAsList.FirstOrDefault(x => x.Length > 3);
             }
 
-            var row = new[] { txtAlias.Text, txtUname.Text, txtPassword.Text, txtLink.Text };
+            var row = new[] { txtAlias.Text, txtUname.Text, txtPassword.Text, txtEmail.Text, txtLink.Text };
             var lwItem = new ListViewItem(row);
 
             lwMain.Items.Add(lwItem);
@@ -144,9 +144,9 @@ namespace PassVault
 
         }
 
-        private void SaveChanges()
+        private async Task SaveChanges()
         {
-            if (string.IsNullOrEmpty(CredentialService.Username) || string.IsNullOrEmpty(CredentialService.Username) && !CredentialService.HasLoggedIn)
+            if (string.IsNullOrEmpty(CredentialService.Username) || string.IsNullOrEmpty(CredentialService.Password) || !CredentialService.HasLoggedIn)
             {
                 MessageBox.Show("User not found!");
                 return;
@@ -160,14 +160,20 @@ namespace PassVault
                 accounts.Add(account);
             }
 
-            var credentials = new Credentials(CredentialService.Username, CredentialService.Password, accounts);
+            if (CredentialService.UsernameHashed is not null && CredentialService.PasswordHashed is not null)
+            {
+                var credentials = new Credentials(CredentialService.UsernameHashed, CredentialService.PasswordHashed, accounts);
 
-            FileService.UpsertFile(CredentialService.Username, CredentialService.Password,);
+                await FileService.UpsertFile(CredentialService.Username, CredentialService.Password, credentials);
+            }
+            else
+                MessageBox.Show("You are not logged-in or corrupt JSON file!");
+
         }
 
-        private void btnSaveChanges_Click(object sender, EventArgs e)
+        private async void btnSaveChanges_Click(object sender, EventArgs e)
         {
-
+            await SaveChanges();
         }
     }
 }
