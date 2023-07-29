@@ -18,7 +18,7 @@ namespace PassVault.Services
         public static HashResponse? PasswordHashed = null;
         public static List<Account> Accounts = new List<Account>();
         public static List<Account> AccountsEncrypted = new List<Account>();
-        public static string EncryptionPassword = Username + Password;
+        public static string EncryptionPassword = string.Empty;
 
 
 
@@ -49,10 +49,26 @@ namespace PassVault.Services
             Username = username;
             Password = password;
 
+            EncryptionPassword = GenerateEncryptionPassword(username, password);
+
             UsernameHashed = credentials.MasterUsername;
             PasswordHashed = credentials.MasterPassword;
 
             AccountsEncrypted = credentials.Accounts.ToList();
+
+            if(AccountsEncrypted.Any())
+            foreach (var account in AccountsEncrypted)
+            {
+                var acc = new Account();
+
+                acc.Username = EncryptionService.SimpleDecryptWithPassword(account.Username, EncryptionPassword);
+                acc.Password = EncryptionService.SimpleDecryptWithPassword(account.Password, EncryptionPassword);
+                acc.Email = EncryptionService.SimpleDecryptWithPassword(account.Email, EncryptionPassword);
+                acc.Alias = EncryptionService.SimpleDecryptWithPassword(account.Alias, EncryptionPassword);
+                acc.Link = EncryptionService.SimpleDecryptWithPassword(account.Link, EncryptionPassword);
+
+                Accounts.Add(acc);
+            }
 
 
             return true;
@@ -87,7 +103,7 @@ namespace PassVault.Services
         {
             var result = username + password;
 
-            return "";
+            return result;  
         }
     }
     }

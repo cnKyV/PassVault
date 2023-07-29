@@ -77,7 +77,7 @@ namespace PassVault.Services
             if (authKey == null || authKey.Length != KeyBitSize / 8)
                 throw new ArgumentNullException($"Key needs to be {KeyBitSize} bit.");
 
-            if (secretMessage == null || secretMessage.Length != KeyBitSize / 8)
+            if (secretMessage == null)
                 throw new ArgumentNullException($"Secret Message Required!");
 
             nonSecretPayload = nonSecretPayload ?? new byte[] { };
@@ -253,7 +253,7 @@ namespace PassVault.Services
                 authKey = generator.GetBytes(KeyBitSize / 8);
 
 
-            return new byte[] { };
+            return SimpleDecrypt(encryptedMessage, cryptKey, authKey, cryptSalt.Length + authSalt.Length + nonSecretPayloadLength);
         }
     }
 }

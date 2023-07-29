@@ -64,6 +64,28 @@ namespace PassVault
             lwMain.View = View.Details;
             lwMain.FullRowSelect = true;
             lwMain.GridLines = true;
+
+            if (CredentialService.Accounts != null && CredentialService.Accounts.Any())
+            {
+                foreach (var account in CredentialService.Accounts)
+                {
+                    var lwItem = new ListViewItem();
+
+                    lwItem.SubItems[0].Text = account.Alias;
+                    lwItem.SubItems.Add(account.Username);
+                    lwItem.SubItems.Add(account.Password);
+                    lwItem.SubItems.Add(account.Email);
+                    lwItem.SubItems.Add(account.Link);
+
+                    //lwItem.SubItems[0].Text = account.Alias;
+                    //lwItem.SubItems[1].Text = account.Username;
+                    //lwItem.SubItems[2].Text = account.Password;
+                    //lwItem.SubItems[3].Text = account.Email;
+                    //lwItem.SubItems[4].Text = account.Link;
+
+                    lwMain.Items.Add(lwItem);
+                }
+            }
         }
 
         private void txtUname_KeyDown(object sender, KeyEventArgs e)
@@ -159,14 +181,11 @@ namespace PassVault
                 //var account = new Account(lwAccount.SubItems[1].Text, lwAccount.SubItems[2].Text, lwAccount.SubItems[3].Text, lwAccount.SubItems[4].Text, lwAccount.SubItems[0].Text);
                 var account = new Account();
 
-                account.Username = lwAccount.SubItems[1].Text;
-                account.Password = lwAccount.SubItems[2].Text;
-                account.Email = lwAccount.SubItems[3].Text;
-                account.Link = lwAccount.SubItems[4].Text;
-                account.Alias = lwAccount.SubItems[0].Text;
-
-
-
+                account.Username = EncryptionService.SimpleEncryptWithPassword(lwAccount.SubItems[1].Text, CredentialService.EncryptionPassword); 
+                account.Password = EncryptionService.SimpleEncryptWithPassword(lwAccount.SubItems[2].Text, CredentialService.EncryptionPassword);
+                account.Email = EncryptionService.SimpleEncryptWithPassword(lwAccount.SubItems[3].Text, CredentialService.EncryptionPassword);
+                account.Link = EncryptionService.SimpleEncryptWithPassword(lwAccount.SubItems[4].Text, CredentialService.EncryptionPassword);
+                account.Alias = EncryptionService.SimpleEncryptWithPassword(lwAccount.SubItems[0].Text, CredentialService.EncryptionPassword);
 
                 accounts.Add(account);
             }
