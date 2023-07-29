@@ -16,6 +16,11 @@ namespace PassVault.Services
         public static string? Password = null;
         public static HashResponse? UsernameHashed = null;
         public static HashResponse? PasswordHashed = null;
+        public static List<Account> Accounts = new List<Account>();
+        public static List<Account> AccountsEncrypted = new List<Account>();
+        public static string EncryptionPassword = Username + Password;
+
+
 
         public static bool Login(string username, string password)
         {
@@ -47,6 +52,9 @@ namespace PassVault.Services
             UsernameHashed = credentials.MasterUsername;
             PasswordHashed = credentials.MasterPassword;
 
+            AccountsEncrypted = credentials.Accounts.ToList();
+
+
             return true;
         }
 
@@ -73,6 +81,13 @@ namespace PassVault.Services
             HasLoggedIn = false;
             Username = null;
             Password = null;
+        }
+
+        private static string GenerateEncryptionPassword(string username, string password)
+        {
+            var result = username + password;
+
+            return "";
         }
     }
     }
